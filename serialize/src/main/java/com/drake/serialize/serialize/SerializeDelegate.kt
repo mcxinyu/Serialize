@@ -96,9 +96,9 @@ internal class SerialDelegate<V>(
     override fun getValue(thisRef: Any, property: KProperty<*>): V {
         val key = "${thisRef.javaClass.name}.${name ?: property.name}"
         return if (default == null) {
-            kv.deserialize(key, clazz)
+            MMKVUtils.deserialize(kv, clazz, key)
         } else {
-            kv.deserialize(key, clazz, default)
+            MMKVUtils.deserialize(kv, clazz, key, default)
         }
     }
 
@@ -130,9 +130,9 @@ internal class SerializeLiveDataDelegate<V>(
         if (value == null) {
             val key = "${thisRef.javaClass.name}.${name ?: property.name}"
             value = if (default == null) {
-                kv.deserialize(key, clazz)
+                MMKVUtils.deserialize(kv, clazz, key)
             } else {
-                kv.deserialize(key, clazz, default)
+                MMKVUtils.deserialize(kv, clazz, key, default)
             }
         }
         value
@@ -199,9 +199,9 @@ internal class SerialLazyDelegate<V>(
             value = run {
                 val key = "${thisRef.javaClass.name}.${name ?: property.name}"
                 if (default == null) {
-                    kv.deserialize(key, clazz)
+                    MMKVUtils.deserialize(kv, clazz, key)
                 } else {
-                    kv.deserialize(key, clazz, default)
+                    MMKVUtils.deserialize(kv, clazz, key, default)
                 }
             }
         }
